@@ -5,9 +5,9 @@ import React from 'react';
 
 const Product = () => {
   return (
-    <div className='p-5'>
+    <div className="p-5">
       <Card sx={{ maxWidth: 300 }}>
-        <CardMedia sx={{ height: 200 }} image="./public/image.png" />
+        <CardMedia sx={{ height: 200 }} image="./image.png" />
         <CardContent>
           <Typography
             gutterBottom
