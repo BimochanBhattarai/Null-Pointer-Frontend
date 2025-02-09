@@ -1,6 +1,6 @@
 import React from 'react'
 
-const product = () => {
+const Product = () => {
   return (
     <div>
         <div className='h-48 w-48'>
@@ -17,4 +17,4 @@ const product = () => {
   )
 }
 
-export default product
+export default Product
