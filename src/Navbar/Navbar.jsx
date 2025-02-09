@@ -1,249 +1,191 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-    AppBar,
-    Toolbar,
-    Typography,
-    InputBase,
-    Menu,
-    MenuItem,
-    Button,
-    Box,
-    IconButton,
-    useMediaQuery,
-    useTheme,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Box,
+  useMediaQuery,
+  useTheme,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  InputBase,
+  Menu,
+  MenuItem,
+  Button,
+  Typography,
 } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { styled, alpha } from '@mui/material/styles';
 
-// Styled Search Component
+// Styled Search Bar
 const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: '25px', // More rounded corners
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    border: `1px solid ${theme.palette.grey[500]}`,
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(2),
-        width: 'auto',
-    },
+  display: 'flex',
+  alignItems: 'center',
+  backgroundColor: alpha(theme.palette.common.black, 0.05),
+  borderRadius: theme.shape.borderRadius,
+  padding: '4px 12px',
+  width: '100%',
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '12ch',
-            '&:focus': {
-                width: '20ch',
-            },
-        },
-    },
+const SearchInput = styled(InputBase)(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+  flex: 1,
 }));
 
 const Navbar = () => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [userMenuAnchorEl, setUserMenuAnchorEl] = React.useState(null);
-    const [selectedOption, setSelectedOption] = React.useState('Buy');
-    const [isAboutMeExpanded, setIsAboutMeExpanded] = React.useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userMenuAnchorEl, setUserMenuAnchorEl] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('Buy');
+  const [searchQuery, setSearchQuery] = useState('');
 
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const open = Boolean(anchorEl);
-    const isUserMenuOpen = Boolean(userMenuAnchorEl);
+  const handleMobileMenuToggle = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+  const handleUserMenuOpen = (event) => {
+    setUserMenuAnchorEl(event.currentTarget);
+  };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+  const handleUserMenuClose = () => {
+    setUserMenuAnchorEl(null);
+  };
 
-    const handleOptionClick = (option) => {
-        setSelectedOption(option);
-        handleClose();
-    };
+  const handleOptionToggle = () => {
+    setSelectedOption(selectedOption === 'Buy' ? 'Sell' : 'Buy');
+  };
 
-    const handleUserMenuOpen = (event) => {
-        setUserMenuAnchorEl(event.currentTarget);
-        setIsAboutMeExpanded(false);
-    };
+  return (
+    <AppBar
+      position="static"
+      sx={{ background: 'white', boxShadow: 'none', py: 1 }}
+    >
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
+        {/* Left Side: Logo */}
+        <Box
+          component="img"
+          src="/safanepal.png"
+          alt="Logo"
+          sx={{ height: 50, borderRadius: 1, ml: 1 }}
+        />
 
-    const handleUserMenuClose = () => {
-        setUserMenuAnchorEl(null);
-    };
+        {/* Right Side: Desktop Navbar Components */}
+        {!isSmallScreen && (
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            {/* Search Bar */}
+            <Search>
+              <SearchIcon sx={{ color: 'gray', mr: 1 }} />
+              <SearchInput
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </Search>
 
-    const toggleAboutMe = () => {
-        setIsAboutMeExpanded((prev) => !prev);
-    };
+            {/* Buy/Sell Toggle */}
+            <Button
+              variant="contained"
+              onClick={handleOptionToggle}
+              sx={{
+                borderRadius: '25px',
+                bgcolor:
+                  selectedOption === 'Buy' ? 'success.main' : 'error.main',
+                color: 'white',
+                '&:hover': {
+                  bgcolor:
+                    selectedOption === 'Buy' ? 'success.dark' : 'error.dark',
+                },
+              }}
+            >
+              {selectedOption}
+            </Button>
 
-    // Mock user data
-    const userDetails = {
-        name: 'John Doe',
-        phoneNumber: '+977 9812345678',
-        email: 'johndoe@example.com',
-        username: 'johndoe123',
-        rewardPoints: 1500,
-    };
+            {/* User Icon */}
+            <IconButton
+              sx={{
+                color: 'gray',
+                border: '2px solid gray',
+                borderRadius: '50%',
+              }}
+              onClick={handleUserMenuOpen}
+            >
+              <AccountCircle fontSize="large" />
+            </IconButton>
 
-    return (
-        
-        <AppBar position="static" sx={{ background: 'transparent', boxShadow: 'none', py: 1, mx: 2 }}
-        >
-            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                {/* Logo */}
-                <Typography
-                    variant="h6"
-                    noWrap
-                    component="div"
-                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-                >
-                    <img
-                        src="/safanepal.png"
-                        alt="Logo"
-                        style={{ width: 'auto', height: '50px', borderRadius: '10px' }} // Rounded logo
-                    />
-                </Typography>
+            {/* User Menu */}
+            <Menu
+              anchorEl={userMenuAnchorEl}
+              open={Boolean(userMenuAnchorEl)}
+              onClose={handleUserMenuClose}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
+              <MenuItem onClick={handleUserMenuClose}>About Me</MenuItem>
+              <MenuItem onClick={handleUserMenuClose}>Logout</MenuItem>
+            </Menu>
+          </Box>
+        )}
 
-                {/* Search */}
-                <Search sx={{ flexGrow: isSmallScreen ? 1 : 0 }}>
-                    <SearchIconWrapper>
-                        <SearchIcon sx={{ color: 'gray' }} /> {/* White icon */}
-                    </SearchIconWrapper>
-                    <StyledInputBase
-                        placeholder="Search…"
-                        inputProps={{ 'aria-label': 'search' }}
-                        sx={{ color: 'gray' }} // White text
-                    />
-                </Search>
+        {/* Right Side: Hamburger Menu for Mobile */}
+        {isSmallScreen && (
+          <IconButton sx={{ color: 'black' }} onClick={handleMobileMenuToggle}>
+            <MenuIcon />
+          </IconButton>
+        )}
+      </Toolbar>
 
-                {/* Buy/Sell Dropdown */}
-                {!isSmallScreen && (
-                    <div>
-                        <Button
-                            variant="contained"
-                            onClick={handleClick}
-                            sx={{
-                                marginLeft: 2,
-                                borderRadius: '25px', // Rounded button
-                                backgroundColor:
-                                    selectedOption === 'Buy'
-                                        ? '#4caf50'
-                                        : selectedOption === 'Sell'
-                                            ? '#f44336'
-                                            : '#1976d2',
-                                color: 'white',
-                                '&:hover': {
-                                    backgroundColor:
-                                        selectedOption === 'Buy'
-                                            ? '#388e3c'
-                                            : selectedOption === 'Sell'
-                                                ? '#d32f2f'
-                                                : '#1565c0',
-                                },
-                            }}
-                        >
-                            {selectedOption}
-                        </Button>
-                        <Menu
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            MenuListProps={{
-                                'aria-labelledby': 'basic-button',
-                            }}
-                        >
-                            <MenuItem
-                                onClick={() => handleOptionClick('Buy')}
-                                sx={{ backgroundColor: selectedOption === 'Buy' ? '#e8f5e9' : 'inherit' }}
-                            >
-                                Buy
-                            </MenuItem>
-                            <MenuItem
-                                onClick={() => handleOptionClick('Sell')}
-                                sx={{ backgroundColor: selectedOption === 'Sell' ? '#ffebee' : 'inherit' }}
-                            >
-                                Sell
-                            </MenuItem>
-                        </Menu>
-                    </div>
-                )}
+      {/* Right-Side Mobile Menu Drawer */}
+      <Drawer
+        anchor="right"
+        open={mobileMenuOpen}
+        onClose={handleMobileMenuToggle}
+      >
+        <Box sx={{ width: 250, p: 2 }}>
+          {/* Search Bar in Mobile Menu */}
+          <Search>
+            <SearchIcon sx={{ color: 'gray', mr: 1 }} />
+            <SearchInput
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </Search>
 
-                {/* User Avatar */}
-                <IconButton
-                    sx={{
-                        marginLeft: 2,
-                        color: 'gray',
-                        border: '2px solid gray', // Circular border
-                        borderRadius: '50%',
-                        '&:hover': {
-                            backgroundColor: alpha(theme.palette.common.white, 0.1), // Hover effect
-                        },
-                    }}
-                    onClick={handleUserMenuOpen}
-                >
-                    <AccountCircle fontSize="large" />
-                </IconButton>
+          {/* Buy/Sell Toggle */}
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleOptionToggle}>
+                <ListItemText
+                  primary={`Switch to ${selectedOption === 'Buy' ? 'Sell' : 'Buy'}`}
+                />
+              </ListItemButton>
+            </ListItem>
 
-                {/* User Menu */}
-                <Menu
-                    anchorEl={userMenuAnchorEl}
-                    open={isUserMenuOpen}
-                    onClose={handleUserMenuClose}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                >
-                    {/* About Me Option */}
-                    <MenuItem onClick={toggleAboutMe}>
-                        {isAboutMeExpanded ? 'Hide Details' : 'About Me'}
-                    </MenuItem>
-
-                    {/* Show Details if About Me is Expanded */}
-                    {isAboutMeExpanded && (
-                        <Box sx={{ px: 2, py: 1 }}>
-                            <Typography variant="body2">Name: {userDetails.name}</Typography>
-                            <Typography variant="body2">Phone: {userDetails.phoneNumber}</Typography>
-                            <Typography variant="body2">Email: {userDetails.email}</Typography>
-                            <Typography variant="body2">Username: {userDetails.username}</Typography>
-                            <Typography variant="body2" color="primary">
-                                Reward Points: {userDetails.rewardPoints}
-                            </Typography>
-                        </Box>
-                    )}
-
-                    {/* Logout Option */}
-                    <MenuItem onClick={handleUserMenuClose}>Logout</MenuItem>
-                </Menu>
-            </Toolbar>
-        </AppBar>
-    );
+            {/* User Menu Options */}
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleUserMenuOpen}>
+                <ListItemText primary="About Me" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleUserMenuClose}>
+                <ListItemText primary="Logout" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Box>
+      </Drawer>
+    </AppBar>
+  );
 };
 
 export default Navbar;

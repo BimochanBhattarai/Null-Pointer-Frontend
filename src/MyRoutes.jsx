@@ -6,13 +6,12 @@ import Products from './components/Products/products';
 import Bid from './components/Bid/Bid';
 
 import Navbar from './Navbar/Navbar';
-
-
+import Footer from './Footer/Footer';
 
 const MyRoutes = () => {
   return (
     <>
-    <Navbar />
+      <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -21,6 +20,7 @@ const MyRoutes = () => {
         {/* <Route path="/buy" element={<Buy />} />
         <Route path="/sell" element={<Sell />} /> */}
       </Routes>
+      <Footer />
     </>
   );
 };
