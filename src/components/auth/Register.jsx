@@ -48,7 +48,7 @@ const Register = () => {
                   value={formData.fullName}
                   onChange={handleChange}
                   required
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-400"
                 />
               </div>
 
@@ -63,7 +63,7 @@ const Register = () => {
                   value={formData.phoneNumber}
                   onChange={handleChange}
                   required
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-400"
                 />
               </div>
 
@@ -78,7 +78,7 @@ const Register = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-400"
                 />
               </div>
 
@@ -93,7 +93,7 @@ const Register = () => {
                   value={formData.username}
                   onChange={handleChange}
                   required
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-400"
                 />
               </div>
 
@@ -108,19 +108,19 @@ const Register = () => {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-400"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
+                className="w-full bg-green-700 text-white py-2 rounded-md hover:bg-green-800 transition duration-300 transform hover:scale-105"
               >
                 Register
               </button>
             </form>
             <p className="text-center text-gray-600 mt-2">
               Already have an account?{' '}
-              <Link to="/login" className="text-blue-600 hover:underline">
+              <Link to="/login" className="text-green-600 hover:underline">
                 Login
               </Link>
             </p>

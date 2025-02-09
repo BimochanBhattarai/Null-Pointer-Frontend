@@ -63,7 +63,7 @@ const Login = () => {
                 value={formData.username}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200"
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-400"
               />
             </div>
 
@@ -78,20 +78,20 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200"
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-400"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition duration-300 transform hover:scale-105"
+              className="w-full bg-green-700 text-white py-3 rounded-md hover:bg-green-800 transition duration-300 transform hover:scale-105"
             >
               Login
             </button>
           </form>
           <p className="text-center text-gray-600 mt-4">
             Don’t have an account?{' '}
-            <Link to="/register" className="text-blue-600 hover:underline">
+            <Link to="/register" className="text-green-600 hover:underline">
               Register
             </Link>
           </p>
