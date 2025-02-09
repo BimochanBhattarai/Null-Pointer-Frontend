@@ -10,17 +10,19 @@ const AuthContainer = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
+    <div className="flex items-center justify-center min-h-screen px-4 w-full ">
+      <div className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl p-6rounded-lg shadow-lg">
         {isLogin ? <Login /> : <Register />}
-        <button
-          onClick={toggleAuthMode}
-          className="w-full text-blue-600 hover:underline"
-        >
-          {isLogin
-            ? "Don't have an account? Register"
-            : 'Already have an account? Login'}
-        </button>
+        <div className="text-center mt-4">
+          <button
+            onClick={toggleAuthMode}
+            className="text-blue-600 hover:underline"
+          >
+            {isLogin
+              ? "Don't have an account? Register"
+              : 'Already have an account? Login'}
+          </button>
+        </div>
       </div>
     </div>
   );
