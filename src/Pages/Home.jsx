@@ -1,5 +1,5 @@
 import React from "react";
-import { FaArrowUp, FaPhoneAlt, FaTruck, FaMoneyBillWave, FaCalendarCheck, FaShieldAlt, FaRecycle } from "react-icons/fa";
+import { FaArrowUp, FaTruck, FaMoneyBillWave, FaCalendarCheck, FaShieldAlt, FaRecycle, FaArrowDown } from "react-icons/fa";
 
 const Home = () => {
   return (
@@ -15,27 +15,34 @@ const Home = () => {
       <section className="how-it-works text-center py-10">
         <h2 className="text-3xl font-bold">How We Work</h2>
         <p className="mt-2 text-gray-600">
-          Simple and one-click order booking. You can place your order using our website or call directly.
+          Sell your recyclable waste items through a bidding process. The
+          highest bidder gets the item!
         </p>
         <div className="flex flex-col md:flex-row justify-center items-center gap-6 mt-6">
           <div className="step text-center p-4 bg-white shadow-md rounded-lg">
             <FaArrowUp className="text-4xl text-green-600 mx-auto" />
-            <h3 className="text-xl font-semibold mt-2">Place Order</h3>
-            <p className="text-gray-600">Place your order in less than 30 seconds using our website.</p>
+            <h3 className="text-xl font-semibold mt-2">List Your Items</h3>
+            <p className="text-gray-600">
+              Provide details of the waste items you wish to sell.
+            </p>
           </div>
           <div className="step text-center p-4 bg-white shadow-md rounded-lg">
-            <FaPhoneAlt className="text-4xl text-green-600 mx-auto" />
-            <h3 className="text-xl font-semibold mt-2">Confirm Order on Call</h3>
-            <p className="text-gray-600">Our call center representative will call you and confirm the order.</p>
+            <FaArrowDown className="text-4xl text-green-600 mx-auto" />
+            <h3 className="text-xl font-semibold mt-2">Receive Bids</h3>
+            <p className="text-gray-600">
+              Interested buyers will place their bids for your listed items.
+            </p>
           </div>
           <div className="step text-center p-4 bg-white shadow-md rounded-lg">
             <FaTruck className="text-4xl text-green-600 mx-auto" />
-            <h3 className="text-xl font-semibold mt-2">Pickup Partner Arrival</h3>
-            <p className="text-gray-600">Our pickup partner will arrive at your doorstep to collect your scraps.</p>
+            <h3 className="text-xl font-semibold mt-2">Highest Bidder Wins</h3>
+            <p className="text-gray-600">
+              The highest bidder secures the item and arranges their own
+              transport.
+            </p>
           </div>
         </div>
       </section>
-
       <section className="why-us bg-green-700 text-white py-10 text-center mb-10 rounded-xl">
         <h2 className="text-3xl font-bold">Why Us</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6 px-6">
