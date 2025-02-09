@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { FaSearch, FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
+import { FaSearch, FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -43,12 +43,14 @@ const Navbar = () => {
       <div className="flex flex-shrink-0 items-center justify-between">
         {/* Left Side: Logo/Image Icon */}
         <div>
-          <img
-            src="/safanepal.png"
-            alt="Logo"
-            className="h-12 w-auto rounded-lg"
-          />
-        </div>
+      <Link to="/"> {/* Wrap the image with a Link to the home route */}
+        <img
+          src="/safanepal.png"
+          alt="Logo"
+          className="h-12 w-auto rounded-lg"
+        />
+      </Link>
+    </div>
 
         {/* Right Side: Search Bar, Buy/Sell Toggle, Login */}
         <div className="flex items-center space-x-4">
