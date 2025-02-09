@@ -6,7 +6,9 @@ function App() {
   return (
     <>
       <Router>
+        <div className='px-10'>
         <MyRoutes />
+        </div>
       </Router>
     </>
   );

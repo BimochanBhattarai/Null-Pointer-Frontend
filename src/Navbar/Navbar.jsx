@@ -19,15 +19,16 @@ import { styled, alpha } from '@mui/material/styles';
 // Styled Search Component
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: '25px', // More rounded corners
     backgroundColor: alpha(theme.palette.common.white, 0.15),
+    border: `1px solid ${theme.palette.grey[500]}`,
     '&:hover': {
         backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
+        marginLeft: theme.spacing(2),
         width: 'auto',
     },
 }));
@@ -50,9 +51,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            width: '12ch', // Smaller width for small screens
+            width: '12ch',
             '&:focus': {
-                width: '20ch', // Expands on focus
+                width: '20ch',
             },
         },
     },
@@ -106,20 +107,34 @@ const Navbar = () => {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: 'grey.500' }}>
-            <Toolbar>
+        
+        <AppBar position="static" sx={{ background: 'transparent', boxShadow: 'none', py: 1, mx: 2 }}
+        >
+            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                 {/* Logo */}
-                <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-                    <img src="/image.png" alt="Logo" style={{ width: 'auto', height: '50px' }} />
+                <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                >
+                    <img
+                        src="/safanepal.png"
+                        alt="Logo"
+                        style={{ width: 'auto', height: '50px', borderRadius: '10px' }} // Rounded logo
+                    />
                 </Typography>
-
 
                 {/* Search */}
                 <Search sx={{ flexGrow: isSmallScreen ? 1 : 0 }}>
                     <SearchIconWrapper>
-                        <SearchIcon />
+                        <SearchIcon sx={{ color: 'gray' }} /> {/* White icon */}
                     </SearchIconWrapper>
-                    <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+                    <StyledInputBase
+                        placeholder="Search…"
+                        inputProps={{ 'aria-label': 'search' }}
+                        sx={{ color: 'gray' }} // White text
+                    />
                 </Search>
 
                 {/* Buy/Sell Dropdown */}
@@ -130,6 +145,7 @@ const Navbar = () => {
                             onClick={handleClick}
                             sx={{
                                 marginLeft: 2,
+                                borderRadius: '25px', // Rounded button
                                 backgroundColor:
                                     selectedOption === 'Buy'
                                         ? '#4caf50'
@@ -176,7 +192,15 @@ const Navbar = () => {
 
                 {/* User Avatar */}
                 <IconButton
-                    sx={{ marginLeft: 2, color: 'white' }}
+                    sx={{
+                        marginLeft: 2,
+                        color: 'gray',
+                        border: '2px solid gray', // Circular border
+                        borderRadius: '50%',
+                        '&:hover': {
+                            backgroundColor: alpha(theme.palette.common.white, 0.1), // Hover effect
+                        },
+                    }}
                     onClick={handleUserMenuOpen}
                 >
                     <AccountCircle fontSize="large" />
@@ -222,4 +246,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;  
+export default Navbar;
