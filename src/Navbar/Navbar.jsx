@@ -42,8 +42,8 @@ const Navbar = () => {
 
   // Handle route changes
   useEffect(() => {
-    if (location.pathname === "/login") {
-      setShowLoginButton(false); // Hide the login button on the login page
+    if (location.pathname === "/login" || location.pathname === "/register") {
+      setShowLoginButton(false); // Hide the login button on the login and register pages
     } else {
       setShowLoginButton(true); // Show the login button on other pages
     }
