@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom"; // Import useLocation
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { FaSearch, FaUserCircle } from "react-icons/fa";
@@ -11,6 +11,8 @@ const Navbar = () => {
   const [isAboutMeExpanded, setIsAboutMeExpanded] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginButton, setShowLoginButton] = useState(true);
+
+  const location = useLocation(); // Get the current route location
 
   const userDetails = {
     name: "John Doe",
@@ -38,19 +40,28 @@ const Navbar = () => {
     setShowLoginButton(false);
   };
 
+  // Handle route changes
+  useEffect(() => {
+    if (location.pathname === "/login") {
+      setShowLoginButton(false); // Hide the login button on the login page
+    } else {
+      setShowLoginButton(true); // Show the login button on other pages
+    }
+  }, [location.pathname]); // Listen for changes in the route
+
   return (
     <nav className="bg-white py-2 px-4">
       <div className="flex flex-shrink-0 items-center justify-between">
         {/* Left Side: Logo/Image Icon */}
         <div>
-      <Link to="/"> {/* Wrap the image with a Link to the home route */}
-        <img
-          src="/safanepal.png"
-          alt="Logo"
-          className="h-12 w-auto rounded-lg"
-        />
-      </Link>
-    </div>
+          <Link to="/">
+            <img
+              src="/safanepal.png"
+              alt="Logo"
+              className="h-12 w-auto rounded-lg"
+            />
+          </Link>
+        </div>
 
         {/* Right Side: Search Bar, Buy/Sell Toggle, Login */}
         <div className="flex items-center space-x-4">
@@ -136,7 +147,6 @@ const Navbar = () => {
             <Link
               to="/login"
               className="px-5 py-2 border border-green-600 text-green-600 font-bold rounded-full hover:bg-green-100 transition duration-300"
-              onClick={() => setShowLoginButton(false)}
             >
               Login
             </Link>
