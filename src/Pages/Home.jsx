@@ -4,14 +4,11 @@ import { FaArrowUp, FaPhoneAlt, FaTruck, FaMoneyBillWave, FaCalendarCheck, FaShi
 const Home = () => {
   return (
     <div className="home-container font-sans">
-      <section className="hero-section text-center py-10 bg-gray-100">
+      <section className="hero-section text-center py-10 bg-gray-100 rounded-2xl">
         <h1 className="text-4xl font-bold text-green-700">Got SCRAP?</h1>
         <h2 className="text-3xl font-bold mt-2">Sell It Now</h2>
         <p className="mt-2 text-gray-600">
-          Sell us your recyclable waste. <strong>Paper - Plastics - Metals - Appliances</strong>
-        </p>
-        <p className="mt-2 font-semibold">
-          Sell us your recyclable wastes and help contribute to the circular economy.
+        Sell us your recyclable waste, including paper, plastics, metals, and appliances, and contribute to the circular economy.
         </p>
       </section>
 
@@ -39,7 +36,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="why-us bg-green-700 text-white py-10 text-center">
+      <section className="why-us bg-green-700 text-white py-10 text-center mb-10 rounded-xl">
         <h2 className="text-3xl font-bold">Why Us</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6 px-6">
           <div className="feature p-6 bg-white text-black rounded-lg shadow-md">
