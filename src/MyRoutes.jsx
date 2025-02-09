@@ -6,6 +6,7 @@ import Products from './components/Products/products';
 import Bid from './components/Bid/Bid';
 
 import Navbar from './Navbar/Navbar';
+import Home from './Pages/Home';
 import Footer from './Footer/Footer';
 
 const MyRoutes = () => {
@@ -13,6 +14,7 @@ const MyRoutes = () => {
     <>
       <Navbar />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/products" element={<Products />} />
