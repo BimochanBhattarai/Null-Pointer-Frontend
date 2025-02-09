@@ -1,249 +1,191 @@
-import React from 'react';
-import {
-    AppBar,
-    Toolbar,
-    Typography,
-    InputBase,
-    Menu,
-    MenuItem,
-    Button,
-    Box,
-    IconButton,
-    useMediaQuery,
-    useTheme,
-} from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import { styled, alpha } from '@mui/material/styles';
-
-// Styled Search Component
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: '25px', // More rounded corners
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    border: `1px solid ${theme.palette.grey[500]}`,
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(2),
-        width: 'auto',
-    },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '12ch',
-            '&:focus': {
-                width: '20ch',
-            },
-        },
-    },
-}));
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import { FaSearch, FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [userMenuAnchorEl, setUserMenuAnchorEl] = React.useState(null);
-    const [selectedOption, setSelectedOption] = React.useState('Buy');
-    const [isAboutMeExpanded, setIsAboutMeExpanded] = React.useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("Buy");
+  const [isAboutMeExpanded, setIsAboutMeExpanded] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLoginButton, setShowLoginButton] = useState(true);
 
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const userDetails = {
+    name: "John Doe",
+    phoneNumber: "+977 9812345678",
+    email: "johndoe@example.com",
+    username: "johndoe123",
+    rewardPoints: 1500,
+  };
 
-    const open = Boolean(anchorEl);
-    const isUserMenuOpen = Boolean(userMenuAnchorEl);
+  const staticData = [
+    'Avengers: Endgame',
+    'The Dark Knight',
+    'Inception',
+    'Interstellar',
+    'Titanic',
+    'The Shawshank Redemption',
+    'Forrest Gump',
+    'The Godfather',
+    'The Matrix',
+    'The Lion King',
+  ];
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+  const handleLoginSubmit = () => {
+    setIsLoggedIn(true);
+    setShowLoginButton(false);
+  };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+  return (
+    <nav className="bg-white py-2 px-4">
+      <div className="flex flex-shrink-0 items-center justify-between">
+        {/* Left Side: Logo/Image Icon */}
+        <div>
+          <img
+            src="/safanepal.png"
+            alt="Logo"
+            className="h-12 w-auto rounded-lg"
+          />
+        </div>
 
-    const handleOptionClick = (option) => {
-        setSelectedOption(option);
-        handleClose();
-    };
+        {/* Right Side: Search Bar, Buy/Sell Toggle, Login */}
+        <div className="flex items-center space-x-4">
+          {/* Search Bar */}
+          <div className="relative flex-grow max-w-md">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+              <FaSearch size={18} />
+            </div>
+            <Autocomplete
+              disablePortal
+              options={staticData}
+              sx={{
+                width: '300px',
+                '& .MuiInputBase-root': {
+                  height: '40px',
+                  borderRadius: '20px',
+                  backgroundColor: '#f3f4f6',
+                  border: 'none',
+                  paddingLeft: '36px',
+                  fontSize: '14px',
+                  '&:hover': {
+                    backgroundColor: '#e5e7eb',
+                  },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    border: 'none',
+                  },
+                },
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="Search..."
+                  variant="outlined"
+                  fullWidth
+                  className="bg-transparent border-none focus:outline-none"
+                />
+              )}
+            />
+          </div>
 
-    const handleUserMenuOpen = (event) => {
-        setUserMenuAnchorEl(event.currentTarget);
-        setIsAboutMeExpanded(false);
-    };
-
-    const handleUserMenuClose = () => {
-        setUserMenuAnchorEl(null);
-    };
-
-    const toggleAboutMe = () => {
-        setIsAboutMeExpanded((prev) => !prev);
-    };
-
-    // Mock user data
-    const userDetails = {
-        name: 'John Doe',
-        phoneNumber: '+977 9812345678',
-        email: 'johndoe@example.com',
-        username: 'johndoe123',
-        rewardPoints: 1500,
-    };
-
-    return (
-        
-        <AppBar position="static" sx={{ background: 'transparent', boxShadow: 'none', py: 1, mx: 2 }}
-        >
-            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                {/* Logo */}
-                <Typography
-                    variant="h6"
-                    noWrap
-                    component="div"
-                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          {/* Buy/Sell Toggle */}
+          <div className="relative">
+            <button
+              className={`px-5 py-2 rounded-full text-white font-medium transition duration-300 ${
+                selectedOption === "Buy"
+                  ? "bg-green-600 hover:bg-green-700"
+                  : "bg-red-600 hover:bg-red-700"
+              }`}
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {selectedOption}
+            </button>
+            {menuOpen && (
+              <div className="absolute mt-2 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                <button
+                  className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${
+                    selectedOption === "Buy" ? "bg-green-100" : ""
+                  }`}
+                  onClick={() => {
+                    setSelectedOption("Buy");
+                    setMenuOpen(false);
+                  }}
                 >
-                    <img
-                        src="/safanepal.png"
-                        alt="Logo"
-                        style={{ width: 'auto', height: '50px', borderRadius: '10px' }} // Rounded logo
-                    />
-                </Typography>
+                  Buy
+                </button>
+                <button
+                  className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${
+                    selectedOption === "Sell" ? "bg-red-100" : ""
+                  }`}
+                  onClick={() => {
+                    setSelectedOption("Sell");
+                    setMenuOpen(false);
+                  }}
+                >
+                  Sell
+                </button>
+              </div>
+            )}
+          </div>
 
-                {/* Search */}
-                <Search sx={{ flexGrow: isSmallScreen ? 1 : 0 }}>
-                    <SearchIconWrapper>
-                        <SearchIcon sx={{ color: 'gray' }} /> {/* White icon */}
-                    </SearchIconWrapper>
-                    <StyledInputBase
-                        placeholder="Search…"
-                        inputProps={{ 'aria-label': 'search' }}
-                        sx={{ color: 'gray' }} // White text
-                    />
-                </Search>
+          {/* Login Button */}
+          {showLoginButton && !isLoggedIn ? (
+            <Link
+              to="/login"
+              className="px-5 py-2 border border-green-600 text-green-600 font-bold rounded-full hover:bg-green-100 transition duration-300"
+              onClick={() => setShowLoginButton(false)}
+            >
+              Login
+            </Link>
+          ) : null}
 
-                {/* Buy/Sell Dropdown */}
-                {!isSmallScreen && (
-                    <div>
-                        <Button
-                            variant="contained"
-                            onClick={handleClick}
-                            sx={{
-                                marginLeft: 2,
-                                borderRadius: '25px', // Rounded button
-                                backgroundColor:
-                                    selectedOption === 'Buy'
-                                        ? '#4caf50'
-                                        : selectedOption === 'Sell'
-                                            ? '#f44336'
-                                            : '#1976d2',
-                                color: 'white',
-                                '&:hover': {
-                                    backgroundColor:
-                                        selectedOption === 'Buy'
-                                            ? '#388e3c'
-                                            : selectedOption === 'Sell'
-                                                ? '#d32f2f'
-                                                : '#1565c0',
-                                },
-                            }}
-                        >
-                            {selectedOption}
-                        </Button>
-                        <Menu
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            MenuListProps={{
-                                'aria-labelledby': 'basic-button',
-                            }}
-                        >
-                            <MenuItem
-                                onClick={() => handleOptionClick('Buy')}
-                                sx={{ backgroundColor: selectedOption === 'Buy' ? '#e8f5e9' : 'inherit' }}
-                            >
-                                Buy
-                            </MenuItem>
-                            <MenuItem
-                                onClick={() => handleOptionClick('Sell')}
-                                sx={{ backgroundColor: selectedOption === 'Sell' ? '#ffebee' : 'inherit' }}
-                            >
-                                Sell
-                            </MenuItem>
-                        </Menu>
+          {/* User Icon (if logged in) */}
+          {isLoggedIn && (
+            <div className="relative">
+              <button
+                className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition duration-300"
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+              >
+                <FaUserCircle size={24} />
+              </button>
+              {userMenuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                  <button
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setIsAboutMeExpanded(!isAboutMeExpanded)}
+                  >
+                    {isAboutMeExpanded ? "Hide Details" : "About Me"}
+                  </button>
+                  {isAboutMeExpanded && (
+                    <div className="px-4 py-2 text-sm text-gray-700 border-t border-gray-200">
+                      <p>Name: {userDetails.name}</p>
+                      <p>Phone: {userDetails.phoneNumber}</p>
+                      <p>Email: {userDetails.email}</p>
+                      <p>Username: {userDetails.username}</p>
+                      <p className="text-blue-600 font-bold">
+                        Reward Points: {userDetails.rewardPoints}
+                      </p>
                     </div>
-                )}
-
-                {/* User Avatar */}
-                <IconButton
-                    sx={{
-                        marginLeft: 2,
-                        color: 'gray',
-                        border: '2px solid gray', // Circular border
-                        borderRadius: '50%',
-                        '&:hover': {
-                            backgroundColor: alpha(theme.palette.common.white, 0.1), // Hover effect
-                        },
+                  )}
+                  <button
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-t border-gray-200"
+                    onClick={() => {
+                      setIsLoggedIn(false);
+                      setUserMenuOpen(false);
+                      setShowLoginButton(true);
                     }}
-                    onClick={handleUserMenuOpen}
-                >
-                    <AccountCircle fontSize="large" />
-                </IconButton>
-
-                {/* User Menu */}
-                <Menu
-                    anchorEl={userMenuAnchorEl}
-                    open={isUserMenuOpen}
-                    onClose={handleUserMenuClose}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                >
-                    {/* About Me Option */}
-                    <MenuItem onClick={toggleAboutMe}>
-                        {isAboutMeExpanded ? 'Hide Details' : 'About Me'}
-                    </MenuItem>
-
-                    {/* Show Details if About Me is Expanded */}
-                    {isAboutMeExpanded && (
-                        <Box sx={{ px: 2, py: 1 }}>
-                            <Typography variant="body2">Name: {userDetails.name}</Typography>
-                            <Typography variant="body2">Phone: {userDetails.phoneNumber}</Typography>
-                            <Typography variant="body2">Email: {userDetails.email}</Typography>
-                            <Typography variant="body2">Username: {userDetails.username}</Typography>
-                            <Typography variant="body2" color="primary">
-                                Reward Points: {userDetails.rewardPoints}
-                            </Typography>
-                        </Box>
-                    )}
-
-                    {/* Logout Option */}
-                    <MenuItem onClick={handleUserMenuClose}>Logout</MenuItem>
-                </Menu>
-            </Toolbar>
-        </AppBar>
-    );
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;
