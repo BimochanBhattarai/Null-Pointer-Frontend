@@ -11,14 +11,14 @@ const Products = ({ excludeProductId }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/v1/products");
+        const response = await fetch('http://localhost:8000/api/v1/products');
         const data = await response.json();
         if (!response.ok) {
-          throw new Error(data.message || "Failed to fetch products");
+          throw new Error(data.message || 'Failed to fetch products');
         }
-        const productsData = data.data.map(product => ({
+        const productsData = data.data.map((product) => ({
           ...product,
-          currentBid: product.lastBidAmount
+          currentBid: product.lastBidAmount,
         }));
         setProducts(productsData);
       } catch (err) {
@@ -51,14 +51,17 @@ const Products = ({ excludeProductId }) => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-green-700">Available Waste Products</h2>
+        <h2 className="text-3xl font-bold text-green-700">
+          Available Waste Products
+        </h2>
         <p className="text-gray-600 mt-2">
-          Explore our collection of recyclable and reusable waste materials to contribute to a sustainable future.
+          Explore our collection of recyclable and reusable waste materials to
+          contribute to a sustainable future.
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         {products
-          .filter(product => product._id !== excludeProductId)
+          .filter((product) => product._id !== excludeProductId)
           .map((product) => (
             <Product key={product._id} product={product} />
           ))}
