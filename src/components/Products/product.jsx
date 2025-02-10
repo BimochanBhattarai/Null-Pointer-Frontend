@@ -5,6 +5,12 @@ import CardContent from '@mui/material/CardContent';
 import { useNavigate } from 'react-router-dom';
 
 const Product = ({ product }) => {
+  const scrollToTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+};
   const navigate = useNavigate();
 
   // Handle navigation to /bid with product data
@@ -67,6 +73,7 @@ const Product = ({ product }) => {
             fullWidth
             onClick={(e) => {
               e.stopPropagation(); // Prevent double navigation
+              scrollToTop();
               handleBidClick();
             }}
             sx={{

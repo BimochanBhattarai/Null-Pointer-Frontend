@@ -42,9 +42,9 @@ const Bid = () => {
             <span className="font-bold text-green-500">
               Highest Bid : Rs. {maxBidAmount}
             </span>
-            <span className="font-bold text-red-500">
+            {/* <span className="font-bold text-red-500">
               Lowest Bid : Rs. {minBidAmount}
-            </span>
+            </span> */}
             <span className="font-bold text-blue-500">
               Last Bid : Rs. {lastBidAmount}
             </span>
@@ -78,13 +78,11 @@ const Bid = () => {
               className="w-full md:w-auto"
               onClick={() => {
                 setLastBidAmount(bidAmount);
-                console.log("Bid placed: ", bidAmount);
-                console.log("Last bid: ", lastBidAmount);
-                if (bidAmount > maxBidAmount) {
-                  setMaxBidAmount(bidAmount);
+                if (lastBidAmount > maxBidAmount) {
+                  setMaxBidAmount(lastBidAmount);
                 }
-                if (bidAmount < minBidAmount) {
-                  setMinBidAmount(bidAmount);
+                if (lastBidAmount < minBidAmount) {
+                  setMinBidAmount(lastBidAmount);
                 }
               }}
               sx={{
