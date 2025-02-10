@@ -28,25 +28,45 @@ const Sell = () => {
     formData.append("quantity", quantity);
     formData.append("location", location);
     formData.append("productImage", productImage);
+    // Provide a sellerId if needed (the backend will use req.user._id if available)
     formData.append("sellerId", "67a911acf443f5c755612379");
-    formData.append("minBidAmount", 0);
+    // Set a valid minBidAmount (backend requires at least 1)
+    formData.append("minBidAmount", 1);
     formData.append("maxBidAmount", 100);
     formData.append("lastBidAmount", 50);
-    formData.append("biddingDate", new Date().toISOString());
+    // Use the key 'biddingEndDate' as required by the backend model
+    formData.append("biddingEndDate", new Date().toISOString());
 
     try {
+      // Retrieve the token from localStorage
+      let token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No JWT token found. Please login.");
+      }
+      
+      // Optional: Remove any extra quotes from the token (if stored as a JSON string)
+      token = token.replace(/^"|"$/g, "").trim();
+
+      // Log the token to verify (remove in production)
+      console.log("Using JWT token:", token);
+
       const response = await fetch("http://localhost:8000/api/v1/products", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
         body: formData,
       });
 
+      // Parse the response as JSON
+      const data = await response.json();
+
       if (!response.ok) {
-        const errorData = await response.json();
-        const errorMessage = errorData?.message || "Failed to list product";
+        const errorMessage = data?.message || "Failed to list product";
         throw new Error(errorMessage);
       }
 
-      const data = await response.json();
       console.log("Product created successfully:", data);
       toast.success("Your product is now listed! 🌟", {
         position: "top-right",
@@ -54,13 +74,10 @@ const Sell = () => {
         onClose: () => navigate("/"),
       });
     } catch (error) {
-      // console.error("Error creating product:", error);
-      // toast.error(`Error: ${error.message}`);
-      console.log("Product created successfully:", error);
-      toast.success("Your product is now listed! 🌟", {
+      console.log("Error creating product:", error);
+      toast.error(`Error: ${error.message}`, {
         position: "top-right",
-        autoClose: 1000
-        // onClose: () => navigate("/"),
+        autoClose: 1000,
       });
     }
   };
@@ -74,7 +91,6 @@ const Sell = () => {
 
   return (
     <div className="flex items-center justify-center p-4 w-full mb-8">
-      {/* ${formData} */}
       <ToastContainer />
       {showConfirmation ? (
         <motion.div

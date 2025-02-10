@@ -29,8 +29,9 @@ const Login = () => {
 
       if (response.ok) {
         console.log('Login successful:', data);
-        // You can store tokens if needed or rely on cookies
-        // Redirect to home page or dashboard
+        console.log('JWT token:', data.data.accessToken);
+        // Store the JWT token in localStorage (assuming token is in data.token)
+        localStorage.setItem("token", data.data.accessToken);
         navigate('/');
       } else {
         console.error('Login failed:', data.message);
