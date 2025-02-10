@@ -6,7 +6,7 @@ const Buy = () => {
   return (
     <div>
       <Link to="/bid"> 
-        <Products />
+        <Products excludeProductId='123' />
       </Link>
     </div>
   );
