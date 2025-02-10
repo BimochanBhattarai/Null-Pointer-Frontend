@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom"; // Import useLocation
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { FaSearch, FaUserCircle } from "react-icons/fa";
+import { FaSearch, FaUserCircle, FaCaretDown } from "react-icons/fa";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("Buy");
+  const [selectedOption, setSelectedOption] = useState("Select your way");
   const [isAboutMeExpanded, setIsAboutMeExpanded] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginButton, setShowLoginButton] = useState(true);
 
-  const location = useLocation(); // Get the current route location
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const userDetails = {
     name: "John Doe",
@@ -43,11 +44,27 @@ const Navbar = () => {
   // Handle route changes
   useEffect(() => {
     if (location.pathname === "/login" || location.pathname === "/register") {
-      setShowLoginButton(false); // Hide the login button on the login and register pages
+      setShowLoginButton(false);
     } else {
-      setShowLoginButton(true); // Show the login button on other pages
+      setShowLoginButton(true);
     }
-  }, [location.pathname]); // Listen for changes in the route
+
+    // Reset selectedOption to default when navigating to the home route
+    if (location.pathname === "/") {
+      setSelectedOption("Select your way");
+    }
+  }, [location.pathname]);
+
+  // Handle Buy/Sell option click
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    setMenuOpen(false);
+    if (option === "Buy") {
+      navigate("/buy");
+    } else if (option === "Sell") {
+      navigate("/sell");
+    }
+  };
 
   return (
     <nav className="bg-white py-2 px-4">
@@ -105,25 +122,25 @@ const Navbar = () => {
           {/* Buy/Sell Toggle */}
           <div className="relative">
             <button
-              className={`px-5 py-2 rounded-full text-white font-medium transition duration-300 ${
+              className={`px-5 py-2 rounded-full text-white font-medium transition duration-300 flex items-center space-x-2 ${
                 selectedOption === "Buy"
                   ? "bg-green-600 hover:bg-green-700"
-                  : "bg-red-600 hover:bg-red-700"
+                  : selectedOption === "Sell"
+                  ? "bg-red-600 hover:bg-red-700"
+                  : "bg-gray-600 hover:bg-gray-700"
               }`}
               onClick={() => setMenuOpen(!menuOpen)}
             >
-              {selectedOption}
+              <span>{selectedOption}</span>
+              <FaCaretDown size={16} />
             </button>
             {menuOpen && (
-              <div className="absolute mt-2 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+              <div className="absolute mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                 <button
                   className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${
                     selectedOption === "Buy" ? "bg-green-100" : ""
                   }`}
-                  onClick={() => {
-                    setSelectedOption("Buy");
-                    setMenuOpen(false);
-                  }}
+                  onClick={() => handleOptionClick("Buy")}
                 >
                   Buy
                 </button>
@@ -131,10 +148,7 @@ const Navbar = () => {
                   className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${
                     selectedOption === "Sell" ? "bg-red-100" : ""
                   }`}
-                  onClick={() => {
-                    setSelectedOption("Sell");
-                    setMenuOpen(false);
-                  }}
+                  onClick={() => handleOptionClick("Sell")}
                 >
                   Sell
                 </button>

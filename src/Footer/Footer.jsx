@@ -20,7 +20,7 @@ const Footer = () => {
           {/* About Section */}
           <Grid item xs={12} sm={4} textAlign={{ xs: 'center', sm: 'left' }}>
             <Typography variant="h6" fontWeight="bold" mb={1}>
-              SafaNepal
+            सफाNepal
             </Typography>
             <Typography variant="body2" sx={{ color: '#555' }}>
               Turning Waste into Wealth, for a Greener Future.
@@ -77,7 +77,7 @@ const Footer = () => {
           textAlign="center"
           sx={{ color: '#777', mt: 1 }}
         >
-          © {new Date().getFullYear()} SafaNepal. All Rights Reserved.
+          © {new Date().getFullYear()} सफाNepal. All Rights Reserved.
         </Typography>
       </Container>
     </Box>

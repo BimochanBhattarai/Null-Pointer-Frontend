@@ -8,6 +8,8 @@ import Bid from './components/Bid/Bid';
 import Navbar from './Navbar/Navbar';
 import Home from './Pages/Home';
 import Footer from './Footer/Footer';
+import Buy from './Pages/Buy';
+import Sell from './Pages/Sell';
 
 const MyRoutes = () => {
   return (
@@ -19,8 +21,8 @@ const MyRoutes = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/products" element={<Products />} />
         <Route path="/bid" element={<Bid />} />
-        {/* <Route path="/buy" element={<Buy />} />
-        <Route path="/sell" element={<Sell />} /> */}
+        <Route path="/buy" element={<Buy />} />
+        <Route path="/sell" element={<Sell />} />
       </Routes>
       <Footer />
     </>
