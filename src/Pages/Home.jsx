@@ -29,44 +29,45 @@ const Home = () => {
   return (
     <div className="home-container font-sans">
       {/* Hero Section */}
-      <section className="hero-section text-center py-20 bg-gradient-to-r from-green-500 to-green-700 rounded-2xl shadow-2xl">
-        <motion.h1
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          className="text-4xl sm:text-5xl font-extrabold text-white"
-        >
-          Got Scrap?
-        </motion.h1>
-        <motion.h2
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          className="text-3xl sm:text-4xl font-bold mt-4 text-white"
-        >
-          Turn It Into Cash Today!
-        </motion.h2>
-        <motion.p
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          className="mt-6 text-lg text-white max-w-2xl mx-auto px-4"
-        >
-          Sell your recyclable waste—be it paper, plastics, metals, or appliances—and contribute to a sustainable future.
-        </motion.p>
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          className="mt-8"
-        >
-          <Link
-            to="/sell"
-            className="px-8 py-3 bg-white text-green-700 font-bold rounded-full hover:bg-green-100 transition-all shadow-lg"
+      <section className="relative text-center py-20 rounded-2xl shadow-2xl overflow-hidden">
+        {/* Background Image with Opacity */}
+        <div className="absolute inset-0 bg-[url('/waste.png')] bg-cover bg-center opacity-30"></div>
+
+        {/* Content Section */}
+        <div className="relative z-10">
+          <motion.h1
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+            className="text-4xl sm:text-5xl font-extrabold text-green-900"
           >
-            Start Selling Now
-          </Link>
-        </motion.div>
+            Got Scrap?
+          </motion.h1>
+          <motion.h2
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+            className="text-3xl sm:text-4xl font-bold mt-4 text-green-900"
+          >
+            Turn It Into Cash Today!
+          </motion.h2>
+          <motion.p
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+            className="mt-6 text-lg text-green-900 max-w-2xl mx-auto px-4"
+          >
+            Sell your recyclable waste—be it paper, plastics, metals, or appliances—and contribute to a sustainable future.
+          </motion.p>
+          <motion.div initial="hidden" animate="visible" variants={fadeInUp} className="mt-8">
+            <Link
+              to="/sell"
+              className="px-8 py-3 bg-white text-green-700 font-bold rounded-full hover:bg-green-100 transition-all shadow-lg"
+            >
+              Start Selling Now
+            </Link>
+          </motion.div>
+        </div>
       </section>
 
       {/* How It Works Section */}
@@ -112,7 +113,7 @@ const Home = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="why-us bg-gradient-to-r from-green-600 to-green-800 text-white py-16 text-center rounded-2xl shadow-2xl">
+      <section className="why-us bg-gradient-to-r from-green-700 via-green-500 to-green-400 text-white py-16 text-center rounded-2xl shadow-2xl">
         <motion.h2
           initial="hidden"
           animate="visible"
@@ -194,11 +195,10 @@ const Home = () => {
         {/* Buy Button */}
         <Link
           to="/buy"
-          className={`px-8 py-4 text-white font-bold rounded-full transition-all shadow-lg ${
-            selectedOption === "Buy"
+          className={`px-8 py-4 text-white font-bold rounded-full transition-all shadow-lg ${selectedOption === "Buy"
               ? "bg-green-600 hover:bg-green-700"
               : "bg-gray-600 hover:bg-gray-700"
-          }`}
+            }`}
           onClick={() => setSelectedOption("Buy")}
         >
           Buy
@@ -207,11 +207,10 @@ const Home = () => {
         {/* Sell Button */}
         <Link
           to="/sell"
-          className={`px-8 py-4 text-white font-bold rounded-full transition-all shadow-lg ${
-            selectedOption === "Sell"
+          className={`px-8 py-4 text-white font-bold rounded-full transition-all shadow-lg ${selectedOption === "Sell"
               ? "bg-red-600 hover:bg-red-700"
               : "bg-gray-600 hover:bg-gray-700"
-          }`}
+            }`}
           onClick={() => setSelectedOption("Sell")}
         >
           Sell
