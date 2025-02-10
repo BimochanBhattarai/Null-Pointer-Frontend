@@ -6,6 +6,10 @@ import Products from '../Products/products';
 const Bid = () => {
   const location = useLocation();
   const product = location.state?.product; // Get product data from route state
+  const [maxBidAmount, setMaxBidAmount] = useState(product.maxBidAmount);
+  const [minBidAmount, setMinBidAmount] = useState(product.minBidAmount);
+  const [lastBidAmount, setLastBidAmount] = useState(product.lastBidAmount);
+  const [bidAmount, setBidAmount] = useState(0);
 
   if (!product) {
     return <div>No product selected. Please go back and select a product.</div>;
@@ -36,32 +40,53 @@ const Bid = () => {
           </div>
           <div className="flex justify-between mb-3 text-center">
             <span className="font-bold text-green-500">
-              Highest Bid : Rs. {product.maxBidAmount || 'N/A'}
+              Highest Bid : Rs. {maxBidAmount}
             </span>
             <span className="font-bold text-red-500">
-              Lowest Bid : Rs. {product.minBidAmount}
+              Lowest Bid : Rs. {minBidAmount}
             </span>
             <span className="font-bold text-blue-500">
-              Last Bid : Rs. {product.lastBidAmount || 'N/A'}
+              Last Bid : Rs. {lastBidAmount}
             </span>
           </div>
           <div className="flex gap-2 flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
-            <TextField
+            {/* <TextField
               id="outlined-basic"
               label="Enter your bid"
               variant="outlined"
               className="flex-grow"
+              value={lastBidAmount}
+              onChange={(e) => setBidAmount(e.target.value)}
               InputProps={{
                 style: {
                   borderRadius: '8px',
                 },
               }}
+            /> */}
+            <input
+              id="outlined-basic"
+              label="Enter your bid"
+              variant="outlined"
+              className="flex-grow p-2 border border-gray-300 rounded-md"
+              value={bidAmount}
+              onChange={(e) => setBidAmount(e.target.value)}
             />
              <Button
               color="success"
               size="large"
               variant="contained"
               className="w-full md:w-auto"
+              onClick={() => {
+                setLastBidAmount(bidAmount);
+                console.log("Bid placed: ", bidAmount);
+                console.log("Last bid: ", lastBidAmount);
+                if (bidAmount > maxBidAmount) {
+                  setMaxBidAmount(bidAmount);
+                }
+                if (bidAmount < minBidAmount) {
+                  setMinBidAmount(bidAmount);
+                }
+              }}
               sx={{
                 borderRadius: '8px',
                 fontWeight: 'bold',
