@@ -73,7 +73,7 @@ const Sell = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl"
+          className="bg-white p-4 md:p-8 rounded-lg shadow-lg w-full max-w-2xl"
         >
           <h1 className="text-3xl font-bold text-center text-green-700 mb-6">
             Sell Your Product

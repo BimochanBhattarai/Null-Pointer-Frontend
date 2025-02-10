@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { FaSearch, FaUserCircle, FaCaretDown } from "react-icons/fa";
+import { FaSearch, FaUserCircle, FaCaretDown } from 'react-icons/fa';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("Select your way");
+  const [selectedOption, setSelectedOption] = useState('Select your way');
   const [isAboutMeExpanded, setIsAboutMeExpanded] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginButton, setShowLoginButton] = useState(true);
@@ -16,10 +16,10 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const userDetails = {
-    name: "John Doe",
-    phoneNumber: "+977 9812345678",
-    email: "johndoe@example.com",
-    username: "johndoe123",
+    name: 'John Doe',
+    phoneNumber: '+977 9812345678',
+    email: 'johndoe@example.com',
+    username: 'johndoe123',
     rewardPoints: 1500,
   };
 
@@ -43,15 +43,15 @@ const Navbar = () => {
 
   // Handle route changes
   useEffect(() => {
-    if (location.pathname === "/login" || location.pathname === "/register") {
+    if (location.pathname === '/login' || location.pathname === '/register') {
       setShowLoginButton(false);
     } else {
       setShowLoginButton(true);
     }
 
     // Reset selectedOption to default when navigating to the home route
-    if (location.pathname === "/") {
-      setSelectedOption("Select your way");
+    if (location.pathname === '/') {
+      setSelectedOption('Select your way');
     }
   }, [location.pathname]);
 
@@ -59,23 +59,30 @@ const Navbar = () => {
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     setMenuOpen(false);
-    if (option === "Buy") {
-      navigate("/buy");
-    } else if (option === "Sell") {
-      navigate("/sell");
+    if (option === 'Buy') {
+      navigate('/buy');
+    } else if (option === 'Sell') {
+      navigate('/sell');
     }
   };
 
   return (
-    <nav className="bg-white py-2 px-4">
+    <nav className="bg-white py-4 px-4">
       <div className="flex flex-shrink-0 items-center justify-between">
         {/* Left Side: Logo/Image Icon */}
-        <div>
+        <div
+        // className="ml-[-35px] md:m-0"
+        >
           <Link to="/">
             <img
               src="/safanepal.png"
               alt="Logo"
-              className="h-12 w-auto rounded-lg"
+              className="h-12 w-auto rounded-lg hidden md:block"
+            />
+            <img
+              src="/safanepal1.png"
+              alt="Logo"
+              className="h-12 w-auto rounded-lg block md:hidden"
             />
           </Link>
         </div>
@@ -83,51 +90,52 @@ const Navbar = () => {
         {/* Right Side: Search Bar, Buy/Sell Toggle, Login */}
         <div className="flex items-center space-x-4">
           {/* Search Bar */}
-          <div className="relative flex-grow max-w-md">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-              <FaSearch size={18} />
-            </div>
-            <Autocomplete
-              disablePortal
-              options={staticData}
-              sx={{
-                width: '300px',
-                '& .MuiInputBase-root': {
-                  height: '40px',
-                  borderRadius: '20px',
-                  backgroundColor: '#f3f4f6',
-                  border: 'none',
-                  paddingLeft: '36px',
-                  fontSize: '14px',
-                  '&:hover': {
-                    backgroundColor: '#e5e7eb',
-                  },
-                  '& .MuiOutlinedInput-notchedOutline': {
+
+          <div className=''>
+            <div className="relative flex-grow max-w-md">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                <FaSearch size={18} />
+              </div>
+              <Autocomplete
+                disablePortal
+                options={staticData}
+                sx={{
+                  width: { xs: '150px', sm: '300px' },
+
+                  '& .MuiInputBase-root': {
+                    height: '40px',
+                    borderRadius: '20px',
+                    backgroundColor: '#f3f4f6',
                     border: 'none',
+                    // paddingLeft: '36px',
+                    paddingLeft: { xs: '10px', sm: '20px' },
+                    fontSize: '14px',
+                    '&:hover': { backgroundColor: '#e5e7eb' },
+                    '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
                   },
-                },
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder="Search..."
-                  variant="outlined"
-                  fullWidth
-                  className="bg-transparent border-none focus:outline-none"
-                />
-              )}
-            />
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Search..."
+                    variant="outlined"
+                    fullWidth
+                    className="bg-transparent border-none focus:outline-none"
+                  />
+                )}
+              />
+            </div>
           </div>
 
           {/* Buy/Sell Toggle */}
-          <div className="relative">
+          <div className="relative hidden md:block">
             <button
               className={`px-5 py-2 rounded-full text-white font-medium transition duration-300 flex items-center space-x-2 ${
-                selectedOption === "Buy"
-                  ? "bg-green-600 hover:bg-green-700"
-                  : selectedOption === "Sell"
-                  ? "bg-red-600 hover:bg-red-700"
-                  : "bg-gray-600 hover:bg-gray-700"
+                selectedOption === 'Buy'
+                  ? 'bg-green-600 hover:bg-green-700'
+                  : selectedOption === 'Sell'
+                    ? 'bg-red-600 hover:bg-red-700'
+                    : 'bg-gray-600 hover:bg-gray-700'
               }`}
               onClick={() => setMenuOpen(!menuOpen)}
             >
@@ -138,17 +146,17 @@ const Navbar = () => {
               <div className="absolute mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                 <button
                   className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${
-                    selectedOption === "Buy" ? "bg-green-100" : ""
+                    selectedOption === 'Buy' ? 'bg-green-100' : ''
                   }`}
-                  onClick={() => handleOptionClick("Buy")}
+                  onClick={() => handleOptionClick('Buy')}
                 >
                   Buy
                 </button>
                 <button
                   className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${
-                    selectedOption === "Sell" ? "bg-red-100" : ""
+                    selectedOption === 'Sell' ? 'bg-red-100' : ''
                   }`}
-                  onClick={() => handleOptionClick("Sell")}
+                  onClick={() => handleOptionClick('Sell')}
                 >
                   Sell
                 </button>
