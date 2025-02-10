@@ -7,47 +7,32 @@ import { useNavigate } from 'react-router-dom';
 const Product = ({ product }) => {
   const navigate = useNavigate();
 
-  // Handle navigation to /bid
+  // Handle navigation to /bid with product data
   const handleBidClick = () => {
-    navigate('/bid'); // Navigate to the bid page
+    navigate('/bid', { state: { product } }); // Pass product data via route state
   };
 
   return (
     <div className="p-5">
-      {/* Card component with onClick for navigating to /bid */}
       <Card sx={{ maxWidth: 300 }} onClick={handleBidClick}>
-        {/* Card media for displaying the image */}
         <CardMedia
           sx={{ height: 200 }}
-          image={product.productImage}  // Dynamically display the image URL
+          image={product.productImage}
           title="Product Image"
         />
-
-        {/* Card content for displaying product details */}
         <CardContent>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="div"
-            style={{ marginBottom: '-1px' }}
-          >
-            {product.productName}  {/* Display product name */}
+          <Typography gutterBottom variant="h5" component="div">
+            {product.productName}
           </Typography>
-          <Typography
-            style={{ color: 'black', fontSize: '16px', marginBottom: '5px' }}
-            variant="body2"
-            sx={{ color: 'text.secondary' }}
-          >
-            {product.productDetails}  {/* Display product details */}
+          <Typography variant="body2" color="text.secondary">
+            {product.productDetails}
           </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          <Typography variant="body2" color="text.secondary">
             <span className="font-bold text-green-500">
-              Current Bid : Rs. {product.currentBid}  {/* Display current bid */}
+              Current Bid : Rs. {product.currentBid}
             </span>
           </Typography>
         </CardContent>
-
-        {/* Card actions for the "Bid" button */}
         <CardActions>
           <Button
             color="success"
@@ -55,7 +40,7 @@ const Product = ({ product }) => {
             variant="contained"
             className="w-full"
             onClick={(e) => {
-              e.stopPropagation(); // Prevent double navigation if needed
+              e.stopPropagation();
               handleBidClick();
             }}
           >
