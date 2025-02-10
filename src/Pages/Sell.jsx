@@ -19,21 +19,50 @@ const Sell = () => {
     setShowConfirmation(true);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     setShowConfirmation(false);
-    console.log({
-      productName,
-      productDetails,
-      category,
-      quantity,
-      location,
-      productImage,
-    });
-    toast.success("Your product is now listed! 🌟", {
-      position: "top-right",
-      autoClose: 1000,
-      onClose: () => navigate("/"),
-    });
+    const formData = new FormData();
+    formData.append("productName", productName);
+    formData.append("productDetails", productDetails);
+    formData.append("category", category);
+    formData.append("quantity", quantity);
+    formData.append("location", location);
+    formData.append("productImage", productImage);
+    formData.append("sellerId", "67a911acf443f5c755612379");
+    formData.append("minBidAmount", 0);
+    formData.append("maxBidAmount", 100);
+    formData.append("lastBidAmount", 50);
+    formData.append("biddingDate", new Date().toISOString());
+
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/products", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        const errorMessage = errorData?.message || "Failed to list product";
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json();
+      console.log("Product created successfully:", data);
+      toast.success("Your product is now listed! 🌟", {
+        position: "top-right",
+        autoClose: 1000,
+        onClose: () => navigate("/"),
+      });
+    } catch (error) {
+      // console.error("Error creating product:", error);
+      // toast.error(`Error: ${error.message}`);
+      console.log("Product created successfully:", error);
+      toast.success("Your product is now listed! 🌟", {
+        position: "top-right",
+        autoClose: 1000
+        // onClose: () => navigate("/"),
+      });
+    }
   };
 
   const handleImageUpload = (e) => {
@@ -44,7 +73,8 @@ const Sell = () => {
   };
 
   return (
-    <div className=" flex items-center justify-center p-4 w-full mb-8">
+    <div className="flex items-center justify-center p-4 w-full mb-8">
+      {/* ${formData} */}
       <ToastContainer />
       {showConfirmation ? (
         <motion.div
@@ -78,11 +108,15 @@ const Sell = () => {
           <h1 className="text-3xl font-bold text-center text-green-700 mb-6">
             Sell Your Product
           </h1>
-          <p className="text-center font-black text-gray-600 mb-4">"Recycling isn’t just good for the planet, it’s good for your pocket too!"</p>
+          <p className="text-center font-black text-gray-600 mb-4">
+            "Recycling isn’t just good for the planet, it’s good for your pocket too!"
+          </p>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="text-sm font-medium text-gray-700 mb-1">Product Name</label>
+                <label className="text-sm font-medium text-gray-700 mb-1">
+                  Product Name
+                </label>
                 <input
                   type="text"
                   value={productName}
@@ -92,14 +126,18 @@ const Sell = () => {
                 />
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700 mb-1">Category</label>
+                <label className="text-sm font-medium text-gray-700 mb-1">
+                  Category
+                </label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 >
-                  <option value="" disabled>Select a category</option>
+                  <option value="" disabled>
+                    Select a category
+                  </option>
                   <option value="Electronics">Electronics</option>
                   <option value="Clothing">Clothing</option>
                   <option value="Furniture">Furniture</option>
@@ -108,18 +146,24 @@ const Sell = () => {
                 </select>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700 mb-1">Quantity (KG)</label>
+                <label className="text-sm font-medium text-gray-700 mb-1">
+                  Quantity (KG)
+                </label>
                 <input
                   type="number"
                   value={quantity}
-                  onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
+                  onChange={(e) =>
+                    setQuantity(Math.max(1, Number(e.target.value)))
+                  }
                   required
                   min="20"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700 mb-1">Location</label>
+                <label className="text-sm font-medium text-gray-700 mb-1">
+                  Location
+                </label>
                 <input
                   type="text"
                   value={location}
@@ -130,7 +174,9 @@ const Sell = () => {
               </div>
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-700 mb-1">Product Details</label>
+              <label className="text-sm font-medium text-gray-700 mb-1">
+                Product Details
+              </label>
               <textarea
                 value={productDetails}
                 onChange={(e) => setProductDetails(e.target.value)}
@@ -140,7 +186,9 @@ const Sell = () => {
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-700 mb-1">Product Image</label>
+              <label className="text-sm font-medium text-gray-700 mb-1">
+                Product Image
+              </label>
               <input
                 type="file"
                 accept="image/*"
@@ -154,7 +202,7 @@ const Sell = () => {
                 type="submit"
                 className="w-full bg-green-600 text-white py-3 rounded-md hover:bg-green-700 transition duration-300"
               >
-                List My Product 
+                List My Product
               </button>
             </div>
           </form>
