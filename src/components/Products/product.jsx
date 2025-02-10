@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { useNavigate } from 'react-router-dom';
 
-const Product = () => {
+const Product = ({ product }) => {
   const navigate = useNavigate();
 
   // Handle navigation to /bid
@@ -17,7 +17,11 @@ const Product = () => {
       {/* Card component with onClick for navigating to /bid */}
       <Card sx={{ maxWidth: 300 }} onClick={handleBidClick}>
         {/* Card media for displaying the image */}
-        <CardMedia sx={{ height: 200 }} image="./image.png" title="Product Image" />
+        <CardMedia
+          sx={{ height: 200 }}
+          image={product.productImage}  // Dynamically display the image URL
+          title="Product Image"
+        />
 
         {/* Card content for displaying product details */}
         <CardContent>
@@ -27,18 +31,18 @@ const Product = () => {
             component="div"
             style={{ marginBottom: '-1px' }}
           >
-            Plastic
+            {product.productName}  {/* Display product name */}
           </Typography>
           <Typography
             style={{ color: 'black', fontSize: '16px', marginBottom: '5px' }}
             variant="body2"
             sx={{ color: 'text.secondary' }}
           >
-            Used bottles and plastic
+            {product.productDetails}  {/* Display product details */}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             <span className="font-bold text-green-500">
-              Current Bid : Rs. 200
+              Current Bid : Rs. {product.currentBid}  {/* Display current bid */}
             </span>
           </Typography>
         </CardContent>
