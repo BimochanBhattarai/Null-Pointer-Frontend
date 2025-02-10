@@ -168,48 +168,37 @@ const Navbar = () => {
 
           {/* User Icon (if logged in) */}
           {isLoggedIn && (
-            <div className="relative">
-              <button
-                className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition duration-300"
-                onClick={() => setUserMenuOpen(!userMenuOpen)}
-              >
-                <FaUserCircle size={24} />
-              </button>
-              {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                  <button
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => setIsAboutMeExpanded(!isAboutMeExpanded)}
-                  >
-                    {isAboutMeExpanded ? "Hide Details" : "About Me"}
-                  </button>
-                  {isAboutMeExpanded && (
-                    <div className="px-4 py-2 text-sm text-gray-700 border-t border-gray-200">
-                      <p>Name: {userDetails.name}</p>
-                      <p>Phone: {userDetails.phoneNumber}</p>
-                      <p>Email: {userDetails.email}</p>
-                      <p>Username: {userDetails.username}</p>
-                      <p className="text-blue-600 font-bold">
-                        Reward Points: {userDetails.rewardPoints}
-                      </p>
-                    </div>
-                  )}
-                  <button
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-t border-gray-200"
-                    onClick={() => {
-                      setIsLoggedIn(false);
-                      setUserMenuOpen(false);
-                      setShowLoginButton(true);
-                    }}
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+          <div className="relative">
+            <button
+              className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition duration-300"
+              onClick={() => setUserMenuOpen(!userMenuOpen)}
+            >
+              <FaUserCircle size={24} />
+            </button>
+            {userMenuOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                <button
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => navigate("/profile")} // Navigate to Profile page
+                >
+                  About Me
+                </button>
+                <button
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-t border-gray-200"
+                  onClick={() => {
+                    setIsLoggedIn(false);
+                    setUserMenuOpen(false);
+                    setShowLoginButton(true);
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
+    </div>
     </nav>
   );
 };

@@ -10,6 +10,7 @@ import Home from './Pages/Home';
 import Footer from './Footer/Footer';
 import Buy from './Pages/Buy';
 import Sell from './Pages/Sell';
+import Profile from './Pages/Profile';
 
 const MyRoutes = () => {
   return (
@@ -23,6 +24,7 @@ const MyRoutes = () => {
         <Route path="/bid" element={<Bid />} />
         <Route path="/buy" element={<Buy />} />
         <Route path="/sell" element={<Sell />} />
+        <Route path="/profile" element={<Profile/>} />
       </Routes>
       <Footer />
     </>
