@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { motion } from "framer-motion";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { motion } from 'framer-motion';
 
 const Sell = () => {
   const navigate = useNavigate();
-  const [productName, setProductName] = useState("");
-  const [productDetails, setProductDetails] = useState("");
-  const [category, setCategory] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [location, setLocation] = useState("");
+  const [productName, setProductName] = useState('');
+  const [productDetails, setProductDetails] = useState('');
+  const [category, setCategory] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [location, setLocation] = useState('');
   const [productImage, setProductImage] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
@@ -22,39 +22,39 @@ const Sell = () => {
   const handleConfirm = async () => {
     setShowConfirmation(false);
     const formData = new FormData();
-    formData.append("productName", productName);
-    formData.append("productDetails", productDetails);
-    formData.append("category", category);
-    formData.append("quantity", quantity);
-    formData.append("location", location);
-    formData.append("productImage", productImage);
+    formData.append('productName', productName);
+    formData.append('productDetails', productDetails);
+    formData.append('category', category);
+    formData.append('quantity', quantity);
+    formData.append('location', location);
+    formData.append('productImage', productImage);
     // Provide a sellerId if needed (the backend will use req.user._id if available)
-    formData.append("sellerId", "67a911acf443f5c755612379");
+    formData.append('sellerId', '67a911acf443f5c755612379');
     // Set a valid minBidAmount (backend requires at least 1)
-    formData.append("minBidAmount", 1);
-    formData.append("maxBidAmount", 100);
-    formData.append("lastBidAmount", 50);
+    formData.append('minBidAmount', 1);
+    formData.append('maxBidAmount', 100);
+    formData.append('lastBidAmount', 50);
     // Use the key 'biddingEndDate' as required by the backend model
-    formData.append("biddingEndDate", new Date().toISOString());
+    formData.append('biddingEndDate', new Date().toISOString());
 
     try {
       // Retrieve the token from localStorage
-      let token = localStorage.getItem("token");
+      let token = localStorage.getItem('token');
       if (!token) {
-        throw new Error("No JWT token found. Please login.");
+        throw new Error('No JWT token found. Please login.');
       }
-      
+
       // Optional: Remove any extra quotes from the token (if stored as a JSON string)
-      token = token.replace(/^"|"$/g, "").trim();
+      token = token.replace(/^"|"$/g, '').trim();
 
       // Log the token to verify (remove in production)
-      console.log("Using JWT token:", token);
+      console.log('Using JWT token:', token);
 
-      const response = await fetch("http://localhost:8000/api/v1/products", {
-        method: "POST",
+      const response = await fetch('http://localhost:8000/api/v1/products', {
+        method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
-          Accept: "application/json",
+          Accept: 'application/json',
         },
         body: formData,
       });
@@ -63,20 +63,20 @@ const Sell = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        const errorMessage = data?.message || "Failed to list product";
+        const errorMessage = data?.message || 'Failed to list product';
         throw new Error(errorMessage);
       }
 
-      console.log("Product created successfully:", data);
-      toast.success("Your product is now listed! 🌟", {
-        position: "top-right",
+      console.log('Product created successfully:', data);
+      toast.success('Your product is now listed! 🌟', {
+        position: 'top-right',
         autoClose: 1000,
-        onClose: () => navigate("/"),
+        onClose: () => navigate('/'),
       });
     } catch (error) {
-      console.log("Error creating product:", error);
+      console.log('Error creating product:', error);
       toast.error(`Error: ${error.message}`, {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 1000,
       });
     }
@@ -101,7 +101,8 @@ const Sell = () => {
         >
           <h2 className="text-xl font-bold text-red-600 mb-4">🚨 Alert!!</h2>
           <p className="text-gray-700 mb-6">
-            Ensure you have the promised quantity available. Buyers rely on your accuracy!
+            Ensure you have the promised quantity available. Buyers rely on your
+            accuracy!
             <br />
             <span className="text-red-600 font-semibold">
               NOTE: Repeated fraudulent activities may lead to legal actions.
@@ -125,7 +126,8 @@ const Sell = () => {
             Sell Your Product
           </h1>
           <p className="text-center font-black text-gray-600 mb-4">
-            "Recycling isn’t just good for the planet, it’s good for your pocket too!"
+            "Recycling isn’t just good for the planet, it’s good for your pocket
+            too!"
           </p>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -154,11 +156,12 @@ const Sell = () => {
                   <option value="" disabled>
                     Select a category
                   </option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="Clothing">Clothing</option>
-                  <option value="Furniture">Furniture</option>
-                  <option value="Books">Books</option>
-                  <option value="Other">Other</option>
+                  <option value="Industrial Waste">Industrial Waste</option>
+                  <option value="Agricultural Waste">Agricultural Waste</option>
+                  <option value="Biomass Waste">Biomass Waste</option>
+                  <option value="Plastic Waste">Plastic Waste</option>
+                  <option value="Compost waste">Compost waste</option>
+                  <option value="E-Waste">E-Waste</option>
                 </select>
               </div>
               <div>

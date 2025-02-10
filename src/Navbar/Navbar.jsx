@@ -24,16 +24,12 @@ const Navbar = () => {
   };
 
   const staticData = [
-    'Avengers: Endgame',
-    'The Dark Knight',
-    'Inception',
-    'Interstellar',
-    'Titanic',
-    'The Shawshank Redemption',
-    'Forrest Gump',
-    'The Godfather',
-    'The Matrix',
-    'The Lion King',
+    'Industrial Waste',
+    'Agricultural Waste',
+    'Biomass Waste',
+    'Plastic Waste',
+    'Compost waste',
+    'E-Waste',
   ];
 
   const handleLoginSubmit = () => {
