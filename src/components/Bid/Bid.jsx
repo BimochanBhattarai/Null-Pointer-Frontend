@@ -49,14 +49,28 @@ const Bid = () => {
               label="Enter your bid"
               variant="outlined"
               className="flex-grow"
+              InputProps={{
+                style: {
+                  borderRadius: '8px',
+                },
+              }}
             />
-            <Button
+             <Button
               color="success"
               size="large"
               variant="contained"
               className="w-full md:w-auto"
+              sx={{
+                borderRadius: '8px',
+                fontWeight: 'bold',
+                textTransform: 'none',
+                backgroundColor: '#4CAF50', // Custom green color
+                '&:hover': {
+                  backgroundColor: '#45a049', // Darker green on hover
+                },
+              }}
             >
-              Bid
+              Place Bid
             </Button>
           </div>
         </div>
