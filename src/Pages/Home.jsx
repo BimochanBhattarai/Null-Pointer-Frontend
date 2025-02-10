@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   FaArrowUp,
   FaTruck,
@@ -9,6 +10,8 @@ import {
 } from "react-icons/fa";
 
 const Home = () => {
+  const [selectedOption, setSelectedOption] = useState("Buy");
+
   return (
     <div className="home-container font-sans">
       {/* Hero Section */}
@@ -71,7 +74,37 @@ const Home = () => {
             <p className="text-gray-600 mt-2">Be a part of responsible recycling and sustainability.</p>
           </div>
         </div>
+
+        {/* Buy & Sell Buttons */}
+        
       </section>
+      <div className="flex gap-10 mt-8 justify-evenly mb-8">
+      {/* Buy Button */}
+      <Link
+        to="/buy"
+        className={`px-6 py-3 text-white font-bold rounded-lg transition-all ${
+          selectedOption === "Buy"
+            ? "bg-green-600 hover:bg-green-700"
+            : "bg-gray-600 hover:bg-gray-700"
+        }`}
+        onClick={() => setSelectedOption("Buy")}
+      >
+        Buy
+      </Link>
+
+      {/* Sell Button */}
+      <Link
+        to="/sell"
+        className={`px-6 py-3 text-white font-bold rounded-lg transition-all ${
+          selectedOption === "Sell"
+            ? "bg-red-600 hover:bg-red-700"
+            : "bg-gray-600 hover:bg-gray-700"
+        }`}
+        onClick={() => setSelectedOption("Sell")}
+      >
+        Sell
+      </Link>
+    </div>
     </div>
   );
 };
