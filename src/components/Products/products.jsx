@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Product from './Product';
 
 const Products = () => {
-  const [products, setProducts] = useState([]);  // Holds fetched products
-  const [loading, setLoading] = useState(true);    // Loading state
-  const [error, setError] = useState(null);        // Error state
+  // State management for products, loading, and error
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // Fetch products from the backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -16,11 +18,10 @@ const Products = () => {
           throw new Error(data.message || "Failed to fetch products");
         }
 
-        // Assuming your backend returns an object with a 'data' field containing an array of products.
-        // Map through each product to add a 'currentBid' property (from lastBidAmount) for UI compatibility.
+        // Transform the data to match the UI requirements
         const productsData = data.data.map(product => ({
           ...product,
-          currentBid: product.lastBidAmount  // Transform backend's lastBidAmount to currentBid for display
+          currentBid: product.lastBidAmount  // Map lastBidAmount to currentBid
         }));
 
         setProducts(productsData);
@@ -34,14 +35,27 @@ const Products = () => {
     fetchProducts();
   }, []);
 
+  // Display loading state
   if (loading) {
-    return <div className="text-center py-8">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
+        <p className="ml-4 text-green-700">Loading...</p>
+      </div>
+    );
   }
 
+  // Display error state
   if (error) {
-    return <div className="text-center py-8">Error: {error}</div>;
+    return (
+      <div className="text-center py-8">
+        <p className="text-red-500 font-semibold">Error: {error}</p>
+        <p className="text-gray-600">Please try again later.</p>
+      </div>
+    );
   }
 
+  // Main component rendering
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Section Title */}
@@ -51,10 +65,11 @@ const Products = () => {
           Explore our collection of recyclable and reusable waste materials to contribute to a sustainable future.
         </p>
       </div>
+
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         {products.map((product) => (
-          <Product key={product._id} product={product} />  // Render each product
+          <Product key={product._id} product={product} />
         ))}
       </div>
     </div>
