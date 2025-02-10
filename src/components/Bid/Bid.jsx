@@ -11,6 +11,8 @@ const Bid = () => {
     return <div>No product selected. Please go back and select a product.</div>;
   }
 
+  console.log("productId: ", product._id);
+
   return (
     <>
       <div className="flex flex-col md:flex-row p-10 mx-auto w-full lg:w-4/5 mb-10">
@@ -75,7 +77,7 @@ const Bid = () => {
           </div>
         </div>
       </div>
-        <Products />
+        <Products excludeProductId={product._id} />
     </>
   );
 };
