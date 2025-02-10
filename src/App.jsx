@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className='px-10'>
+        <div className='px-2 md:px-10'>
         <MyRoutes />
         </div>
       </Router>
