@@ -15,9 +15,35 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Registration Data: ', formData);
+    try {
+      const response = await fetch('http://localhost:8000/api/v1/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Registration failed');
+      }
+
+      const data = await response.json();
+      console.log('User registered successfully:', data);
+      setFormData({
+        fullName: '',
+        phoneNumber: '',
+        email: '',
+        username: '',
+        password: '',
+      });
+      // Optionally, you can add a redirect or a success message here.
+    } catch (error) {
+      console.error('Registration error:', error);
+      // Optionally, display an error message to the user.
+    }
   };
 
   return (
