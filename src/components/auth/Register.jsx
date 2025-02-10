@@ -51,7 +51,7 @@ const Register = () => {
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden flex flex-col md:flex-row">
         <div className="w-full md:w-1/2 flex justify-center items-center p-8">
           <img
-            src="./safanepal.png"
+            src="/safanepal.png"
             alt="SafaNepal Logo"
             className="w-3/4 md:w-2/3 lg:w-1/2 max-w-xs object-contain"
           />
