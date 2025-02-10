@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,7 +17,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('http://localhost:8000/api/v1/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,11 +29,16 @@ const Login = () => {
 
       if (response.ok) {
         console.log('Login successful:', data);
+        // You can store tokens if needed or rely on cookies
+        // Redirect to home page or dashboard
+        navigate('/');
       } else {
         console.error('Login failed:', data.message);
+        alert(data.message || 'Login failed');
       }
     } catch (error) {
       console.error('An error occurred:', error);
+      alert('An error occurred: ' + error.message);
     }
   };
 
@@ -84,14 +88,13 @@ const Login = () => {
                   className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 />
               </div>
-              < Link to="/" >
+
               <button
                 type="submit"
                 className="w-full bg-green-600 text-white py-3 rounded-md hover:bg-green-700 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
-                >
+              >
                 Login
               </button>
-                </Link>
             </form>
             <p className="text-center text-gray-600 mt-6">
               Don’t have an account?{' '}
