@@ -5,7 +5,7 @@ import Products from '../components/Products/products';
 const Buy = () => {
   return (
     <div>
-      <Link to="/product-details"> {/* Wrap Products with Link */}
+      <Link to="/bid"> 
         <Products />
       </Link>
     </div>
